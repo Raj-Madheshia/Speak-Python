@@ -8,7 +8,7 @@ from tkinter import *
 import threading
 from symbol import symbol
 from buildfunc import func
-
+from sentence import sentenceHandler
 
 # This function is for Speaking Audio
 def speak(audioString):
@@ -78,5 +78,7 @@ while 1:
         data = symbol(data)
     elif "define function" in data.lower():
         data = func(data)
+    else:
+        data = sentenceHandler(data)
     app.print(data)
 
