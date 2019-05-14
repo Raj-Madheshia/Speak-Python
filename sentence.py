@@ -1,40 +1,101 @@
 def sentenceHandler(data):
-    words =  data.split()
+    w =  data.lower().split()
     new = ""
     i =0
-    check = len(words)
+    check = len(w)
     while(i<check):
         if i == check:
             break
-        if words[i] == "greater":
+        if w[i] == "greater":
             i +=1
-            if i !=check and words[i]== "than":
+            if i !=check and w[i]== "than":
                 i+=1
                 new = new+ " >"
-                if i != check and words[i] == "or":
+                if i != check and w[i] == "or":
                     new = new+ "="
                     i+=3
-        elif words[i] =="less":
+        elif w[i] =="less":
             i+=1
-            if i !=check and words[i]== "than":
+            if i !=check and w[i]== "than":
                 i+=1
                 new = new+ " <"
-                if i != check and words[i] == "or":
+                if i != check and w[i] == "or":
                     new = new+ "="
                     i+=3
-        elif words[i] == "equal" or words[i] == "equals":
+        elif w[i] == "equal" or w[i] == "equals":
             i+=1
-            if words[i] == "to":
+            if w[i] == "to":
                 new = new +" == "
                 i+=1
-        elif words[i] == "not":
+        elif w[i] == "not":
             i+=1
-            if words[i] == "equal" or words[i] == "equals":
+            if w[i] == "equal" or w[i] == "equals":
                 i+=1
-                if words[i] == "to":
+                if w[i] == "to":
                     new = new +" == "
                     i+=1
+        elif w[i] == 'or' or w[i]== 'and' or w[i] == '+' or w[i] == "-" or w[i] =="*" or w[i] == "%" or w[i] == '/':
+            new = new + " "+ w[i]
+            i +=1
+        elif w[i] == 'plus':
+            i +=1
+            new = new +" + "
+        elif w[i] == 'minus':
+            i +=1
+            new = new +" - "
+        elif w[i] == 'multiplication' or w[i] == "multiply":  
+            i +=1
+            new = new +" * "
+        elif w[i] == "modulo":
+            i+=1
+            new = new + " % "
+        elif w[i] == "by":
+            i+=1
+            new = new + " / "
+        elif w[i] == "divide":
+            i+=1
+            new = new + " // "
+        elif w[i] == "bitwise":
+            i+=1
+            if w[i] == 'complement':
+                new = new+ " ~"
+                i+=1
+            elif w[i] == "and":
+                new = new+ ' &'
+                i+=1
+            elif w[i] == "and":
+                new = new+ ' &'
+                i+=1
+            elif w[i] == "exclusive":
+                i+=1
+                if w[i] == 'or':
+                    new = new+ " ^"
+                    i+=1
+            elif w[i] == 'or':
+                new = new+ ' |'
+                i+=1
+            elif w[i] == "shift":
+                i+=1
+                if w[i] == 'left':
+                    new = new+ " << "
+                    i+=1
+                elif w[i] == 'right':
+                    new = new + " >> "
+                    i+=1
+        elif w[i] == "of":
+            i+=1
+            new = new+"["+ w[i]+"]"
+            i+=1
+        elif w[i] == 'next' and w[i+1] == 'line':
+            new = new+'\n'
+            i+=2
+        elif w[i] == 'tab':
+            new= new+ "\t"
+            i+=1
+        elif w[i] == "colon":
+                new = new+ ': \n\t'
+                i+=1
         else:
-            new = new +" " +words[i]
+            new = new +" " +w[i]
             i+=1
     return new

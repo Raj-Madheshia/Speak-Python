@@ -5,6 +5,8 @@ import os
 from gtts import gTTS
 import pyttsx3
 from tkinter import *
+from tkinter.scrolledtext import ScrolledText
+
 import threading
 from symbol import symbol
 from buildfunc import func
@@ -55,18 +57,29 @@ class App(threading.Thread):
     def print(self, data):
         if data != "":
             self.text.insert(END, data)
+    
     def run(self):
+        
         self.root = Tk()
         self.root.protocol("WM_DELETE_WINDOW", self.callback)
-        self.text = Text(self.root)
-        self.text.pack()
+        self.textContainer = Frame(self.root, borderwidth=1, relief="sunken")
+        self.text = Text(self.textContainer, width=80, height=80, wrap="none", borderwidth=0, font=('consolas', '12'))
+        self.textVsb = Scrollbar(self.textContainer, orient="vertical", command=self.text.yview)
+        self.textHsb = Scrollbar(self.textContainer, orient="horizontal", command=self.text.xview)
+        self.text.configure(yscrollcommand=self.textVsb.set, xscrollcommand=self.textHsb.set)
+        self.text.grid(row=0, column=0, sticky="nsew")
+        self.textVsb.grid(row=0, column=1, sticky="ns")
+        self.textHsb.grid(row=1, column=0, sticky="ew")
+        self.textContainer.grid_rowconfigure(0, weight=1)
+        self.textContainer.grid_columnconfigure(0, weight=1)
+        self.textContainer.pack(side="top", fill="both", expand=True)
         self.root.mainloop()
 
 
 app = App()
 print('Now we can continue running code while mainloop runs!')
 
-
+    
 # initialization
 time.sleep(2)
 speak("Hi Raj, what can I do for you?")
