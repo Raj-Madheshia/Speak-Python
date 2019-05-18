@@ -4,8 +4,6 @@ import time
 import os
 import pyttsx3
 from tkinter import *
-from tkinter.scrolledtext import ScrolledText
-
 import threading
 from symbol import symbol
 from buildfunc import func
